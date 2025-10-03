@@ -1,9 +1,7 @@
 "use client";
+export const dynamic = "force-dynamic";
 
-export const dynamic = "force-dynamic"; // บังคับ render แบบ client-side
 import { useSearchParams, useRouter } from "next/navigation";
-
-
 
 export default function BookingPage() {
   const searchParams = useSearchParams();
@@ -25,7 +23,7 @@ export default function BookingPage() {
   };
 
   return (
-    <div key="client" className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-lg rounded-xl p-8 w-[500px]">
         <h1 className="text-2xl font-bold text-blue-700 mb-6 text-center">
           รายละเอียดการจอง
