@@ -1,5 +1,5 @@
 "use client";
-
+export const dynamic = "force-dynamic"; // บังคับ render แบบ client-side
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

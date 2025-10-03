@@ -1,7 +1,9 @@
 "use client";
+
+export const dynamic = "force-dynamic"; // บังคับ render แบบ client-side
 import { useSearchParams, useRouter } from "next/navigation";
 
-export const dynamic = "force-dynamic";
+
 
 export default function BookingPage() {
   const searchParams = useSearchParams();

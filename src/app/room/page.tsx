@@ -1,4 +1,7 @@
 "use client";
+
+export const dynamic = "force-dynamic"; // บังคับ render แบบ client-side
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image"; // ✅ แก้ img เป็น Image
