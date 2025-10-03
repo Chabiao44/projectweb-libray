@@ -7,13 +7,13 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "www.mju.ac.th",
         port: "",
-        pathname: "/th/images/**", // ตรงกับ path ของโลโก้
+        pathname: "/th/images/**",
       },
       {
         protocol: "https",
         hostname: "www.truedigitalpark.com",
         port: "",
-        pathname: "/public/uploads/meeting-room/**", // ตรงกับ path ของรูปห้อง
+        pathname: "/public/uploads/meeting-room/**",
       },
     ],
   },
