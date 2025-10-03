@@ -1,6 +1,6 @@
 "use client";
 
-export const dynamic = "force-dynamic"; // บังคับ render แบบ client-side
+
 
 
 import { useEffect, useState } from "react";
