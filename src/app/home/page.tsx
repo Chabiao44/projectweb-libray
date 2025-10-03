@@ -20,13 +20,7 @@ export default function Home() {
       {/* Header */}
       <header className="flex justify-between items-center shadow p-5 bg-gradient-to-r to-blue-600">
     <div className="relative w-40 h-16">
-      <Image
-      src="https://www.mju.ac.th/th/images/mju_logo_main-resize.png"
-      alt="MJU Logo"
-      fill
-      className="object-contain"
-      priority
-      />
+      
     </div>
       <h2 className="text-right text-xl font-semibold text-white">
         {userName ? `สวัสดีคุณ ${userName}` : "ผู้ใช้งานทั่วไป"}
