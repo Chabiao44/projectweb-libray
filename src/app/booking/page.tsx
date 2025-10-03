@@ -1,6 +1,8 @@
 "use client";
 import { useSearchParams, useRouter } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default function BookingPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
