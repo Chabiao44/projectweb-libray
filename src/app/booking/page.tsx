@@ -3,6 +3,13 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+// ประกาศ type ก่อนใช้
+type Booking = {
+  date: string | null;
+  time: string | null;
+  room: string | null;
+};
+
 export default function BookingPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -11,20 +18,21 @@ export default function BookingPage() {
   const time = searchParams.get("time");
   const room = searchParams.get("room");
 
-  const [bookings, setBookings] = useState([]);
+  // กำหนด type ให้ state ชัดเจน
+  const [bookings, setBookings] = useState<Booking[]>([]);
 
   // โหลด bookings จาก localStorage เฉพาะ client
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("bookings") || "[]");
+    const saved: Booking[] = JSON.parse(localStorage.getItem("bookings") || "[]");
     setBookings(saved);
   }, []);
 
   const handleConfirm = () => {
-    const newBooking = { date, time, room };
-    const updatedBookings = [...bookings, newBooking];
+    const newBooking: Booking = { date, time, room };
+    const updatedBookings: Booking[] = [...bookings, newBooking];
 
     localStorage.setItem("bookings", JSON.stringify(updatedBookings));
-    setBookings(updatedBookings);
+    setBookings(updatedBookings); // ✅ ตอนนี้ TypeScript จะไม่เตือน
 
     alert("ยืนยันการจองเรียบร้อย ✅");
     router.push("/my-booking");
