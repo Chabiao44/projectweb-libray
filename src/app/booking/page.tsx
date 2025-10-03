@@ -1,14 +1,5 @@
 "use client";
-
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-
-// ประกาศ type ก่อนใช้
-type Booking = {
-  date: string | null;
-  time: string | null;
-  room: string | null;
-};
 
 export default function BookingPage() {
   const searchParams = useSearchParams();
@@ -18,23 +9,19 @@ export default function BookingPage() {
   const time = searchParams.get("time");
   const room = searchParams.get("room");
 
-  // กำหนด type ให้ state ชัดเจน
-  const [bookings, setBookings] = useState<Booking[]>([]);
-
-  // โหลด bookings จาก localStorage เฉพาะ client
-  useEffect(() => {
-    const saved: Booking[] = JSON.parse(localStorage.getItem("bookings") || "[]");
-    setBookings(saved);
-  }, []);
-
   const handleConfirm = () => {
-    const newBooking: Booking = { date, time, room };
-    const updatedBookings: Booking[] = [...bookings, newBooking];
+    const newBooking = { date, time, room };
 
-    localStorage.setItem("bookings", JSON.stringify(updatedBookings));
-    setBookings(updatedBookings); // ✅ ตอนนี้ TypeScript จะไม่เตือน
+    // ดึงข้อมูลเก่ามาก่อน
+    const saved = JSON.parse(localStorage.getItem("bookings") || "[]");
+
+    // เก็บข้อมูลใหม่เพิ่มเข้าไป
+    saved.push(newBooking);
+    localStorage.setItem("bookings", JSON.stringify(saved));
 
     alert("ยืนยันการจองเรียบร้อย ✅");
+
+    // ไปที่หน้า my-bookings
     router.push("/my-booking");
   };
 
@@ -46,9 +33,15 @@ export default function BookingPage() {
         </h1>
 
         <div className="space-y-4 text-gray-800">
-          <p><strong>ห้องที่จอง:</strong> {room || "ไม่ระบุ"}</p>
-          <p><strong>วันที่:</strong> {date || "ไม่ระบุ"}</p>
-          <p><strong>เวลา:</strong> {time || "ไม่ระบุ"}</p>
+          <p>
+            <strong>ห้องที่จอง:</strong> {room || "ไม่ระบุ"}
+          </p>
+          <p>
+            <strong>วันที่:</strong> {date || "ไม่ระบุ"}
+          </p>
+          <p>
+            <strong>เวลา:</strong> {time || "ไม่ระบุ"}
+          </p>
         </div>
 
         <div className="mt-6 flex justify-center">
