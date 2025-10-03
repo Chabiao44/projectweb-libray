@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: ['www.mju.ac.th', 'www.truedigitalpark.com'], // ✅ ใส่ทุกโดเมนที่ใช้ <Image>
+  },
 };
 
 export default nextConfig;
