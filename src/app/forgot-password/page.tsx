@@ -11,6 +11,11 @@ const forgotSchema = z.object({
 
 type ForgotForm = z.infer<typeof forgotSchema>;
 
+interface User {
+  email: string;
+  password: string; // เพิ่ม field อื่นได้ตามจริง
+}
+
 export default function ForgotPasswordPage() {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm<ForgotForm>({
@@ -18,17 +23,15 @@ export default function ForgotPasswordPage() {
   });
 
   const onSubmit = (data: ForgotForm) => {
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const user = users.find((u: any) => u.email === data.email);
+    const users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find((u) => u.email === data.email);
 
     if (user) {
-      // ส่งไป Reset Password page พร้อม query parameter email
       router.push(`/reset-password?email=${encodeURIComponent(data.email)}`);
     } else {
       alert("ไม่พบอีเมลนี้ในระบบ");
     }
   };
-
   return (
      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-white p-4">
       

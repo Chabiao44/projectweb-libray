@@ -12,6 +12,12 @@ const loginSchema = z.object({
 
 type LoginForm = z.infer<typeof loginSchema>;
 
+interface User {
+  email: string;
+  password: string;
+  name?: string;
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const {
@@ -23,19 +29,20 @@ export default function LoginPage() {
   });
 
   const onSubmit = (data: LoginForm) => {
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
 
     const user = users.find(
-      (u: any) => u.email === data.email && u.password === data.password
+      (u) => u.email === data.email && u.password === data.password
     );
 
     if (user) {
-      alert(`เข้าสู่ระบบสำเร็จ! สวัสดี ${user.name}`);
-      router.push("/home"); // 👉 เข้าหน้า home
+      alert(`เข้าสู่ระบบสำเร็จ! สวัสดี ${user.name ?? "ผู้ใช้"}`);
+      router.push("/home");
     } else {
       alert("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
     }
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <div className="flex w-[750px] bg-white shadow-xl rounded-xl overflow-hidden transform hover:shadow-2xl transition duration-300">

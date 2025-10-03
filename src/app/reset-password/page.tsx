@@ -5,28 +5,40 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams, useRouter } from "next/navigation";
 
-const resetSchema = z.object({
-  password: z.string().min(6, "รหัสผ่านต้องมีอย่างน้อย 6 ตัว"),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "รหัสผ่านไม่ตรงกัน",
-  path: ["confirmPassword"],
-});
+const resetSchema = z
+  .object({
+    password: z.string().min(6, "รหัสผ่านต้องมีอย่างน้อย 6 ตัว"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "รหัสผ่านไม่ตรงกัน",
+    path: ["confirmPassword"],
+  });
 
 type ResetForm = z.infer<typeof resetSchema>;
+
+interface User {
+  email: string;
+  password: string;
+  name?: string;
+}
 
 export default function ResetPasswordPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "";
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ResetForm>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ResetForm>({
     resolver: zodResolver(resetSchema),
   });
 
   const onSubmit = (data: ResetForm) => {
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const index = users.findIndex((u: any) => u.email === email);
+    const users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+    const index = users.findIndex((u) => u.email === email);
 
     if (index !== -1) {
       users[index].password = data.password;
@@ -37,6 +49,7 @@ export default function ResetPasswordPage() {
       alert("ไม่พบอีเมลนี้ในระบบ");
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-white p-4">
