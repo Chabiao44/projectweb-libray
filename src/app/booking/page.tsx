@@ -1,7 +1,7 @@
 "use client";
 
-
 import { useSearchParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function BookingPage() {
   const searchParams = useSearchParams();
@@ -11,12 +11,20 @@ export default function BookingPage() {
   const time = searchParams.get("time");
   const room = searchParams.get("room");
 
+  const [bookings, setBookings] = useState<any[]>([]);
+
+  // โหลด bookings จาก localStorage เฉพาะ client
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("bookings") || "[]");
+    setBookings(saved);
+  }, []);
+
   const handleConfirm = () => {
     const newBooking = { date, time, room };
+    const updatedBookings = [...bookings, newBooking];
 
-    const saved = JSON.parse(localStorage.getItem("bookings") || "[]");
-    saved.push(newBooking);
-    localStorage.setItem("bookings", JSON.stringify(saved));
+    localStorage.setItem("bookings", JSON.stringify(updatedBookings));
+    setBookings(updatedBookings);
 
     alert("ยืนยันการจองเรียบร้อย ✅");
     router.push("/my-booking");
