@@ -12,7 +12,7 @@ export default function AdminPage() {
         <h2 className="text-xl font-bold mb-6">Admin Panel</h2>
         <nav className="flex flex-col gap-3">
           <Link href="/admin/dashboard" className="text-gray-700 hover:text-blue-600">📊 Dashboard</Link>
-          <Link href="/admin/users" className="text-gray-700 hover:text-blue-600">👤 Users</Link>
+          <Link href="/adminuser" className="text-gray-700 hover:text-blue-600">👤 Users</Link>
           <Link href="/admin/products" className="text-gray-700 hover:text-blue-600">📦 Products</Link>
           <Link href="/admin/orders" className="text-gray-700 hover:text-blue-600">🧾 Orders</Link>
           <Link href="/admin/settings" className="text-gray-700 hover:text-blue-600">⚙️ Settings</Link>
