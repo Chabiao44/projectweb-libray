@@ -108,12 +108,14 @@ export default function RegisterPage() {
             )}
           </div>
 
+        <Link href="/login">
           <button
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg transition"
           >
             สมัครสมาชิก
           </button>
+        </Link>
         </form>
 
         <p className="text-center text-gray-500 mt-4">

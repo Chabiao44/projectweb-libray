@@ -13,7 +13,7 @@ type Booking = {
   date: string | null;
   time: string | null;
   room: string | null;
-  user: string; 
+  user: string;
 };
 
 export default function ProfilePage() {
@@ -22,17 +22,13 @@ export default function ProfilePage() {
   const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
-    // ดึง currentUser
     const currentUser = JSON.parse(localStorage.getItem("currentUser") || "null");
     if (currentUser) {
       setUserName(currentUser.name);
-
-      // ดึง users สำหรับแสดงข้อมูลโปรไฟล์
       const users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
       const foundUser = users.find((u) => u.name === currentUser.name);
       setUser(foundUser || null);
 
-      // ดึง booking จาก MyBookings (localStorage "bookings")
       const savedBookings: Booking[] = JSON.parse(localStorage.getItem("bookings") || "[]");
       setBookings(savedBookings);
     }
@@ -50,81 +46,74 @@ export default function ProfilePage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">ยังไม่ได้เข้าสู่ระบบ</p>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-sky-100 via-cyan-50 to-blue-100">
+        <p className="text-blue-600 font-medium">ยังไม่ได้เข้าสู่ระบบ</p>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-sky-100 via-cyan-50 to-blue-100">
       {/* Header */}
-      <header className="flex items-center justify-between shadow-md bg-gradient-to-r to-blue-600 p-5 text-white">
-        <img
-          src="https://www.mju.ac.th/th/images/mju_logo_main-resize.png"
-          alt="MJU Logo"
-          className="h-16 w-auto"
-        />
-        <h2 className="text-xl font-semibold">
-    <Link href="/profile" className="hover:underline">
-      {userName || "ผู้ใช้งานทั่วไป"}
-    </Link>
-  </h2>
+      <header className="flex justify-between items-center p-4 bg-white/80 backdrop-blur-sm shadow-md border-b">
+        {/* Library ซ้าย */}
+        <div className="text-blue-700 font-medium text-sm">
+          Library
+        </div>
+
+        {/* Profile ขวา */}
+        <div className="text-blue-800 font-semibold text-lg">
+          <Link href="/profile" className="hover:underline">
+            {userName || "ผู้ใช้งานทั่วไป"}
+          </Link>
+        </div>
       </header>
 
-      {/* Body */}
-      <main className="flex-1 p-10">
-        <div className="bg-white shadow-lg rounded-xl p-8 max-w-4xl mx-auto relative">
+      {/* Main */}
+      <main className="flex-1 p-6">
+        <div className="bg-white/90 rounded-xl p-6 shadow-md max-w-3xl mx-auto relative">
           <Link
             href="/home"
-            className="absolute top-6 right-6 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-semibold"
+            className="absolute top-4 right-4 text-blue-600 hover:underline text-sm font-medium"
           >
             กลับหน้าหลัก
           </Link>
 
-          <h1 className="text-2xl font-bold text-blue-700 mb-6 text-center">
+          <h1 className="text-2xl font-semibold text-blue-800 mb-4 text-center">
             โปรไฟล์ของ {userName}
           </h1>
 
-          <div className="mb-6">
-            <p><span className="font-semibold">ชื่อ:</span> {user.name}</p>
-            <p><span className="font-semibold">อีเมล:</span> {user.email}</p>
+          <div className="mb-6 text-blue-700 space-y-1">
+            <p><span className="font-medium">ชื่อ:</span> {user.name}</p>
+            <p><span className="font-medium">อีเมล:</span> {user.email}</p>
           </div>
 
-          <h2 className="text-xl font-bold text-blue-500 mb-4">ข้อมูลการจองของฉัน</h2>
+          <h2 className="text-xl font-semibold text-blue-800 mb-3">ข้อมูลการจองของฉัน</h2>
 
           {bookings.length === 0 ? (
-            <div className="text-center py-10">
-              <p className="text-gray-600 text-lg">ยังไม่มีการจอง</p>
+            <div className="text-center py-8 text-blue-400">
+              ยังไม่มีการจอง
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {bookings.map((b, index) => (
                 <div
                   key={index}
-                  className="p-5 border rounded-lg shadow-sm bg-blue-50 hover:shadow-md transition"
+                  className="p-4 bg-white rounded-md shadow hover:shadow-md transition flex justify-between items-start"
                 >
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <p className="text-lg font-semibold text-blue-800 mb-2">
-                        {b.room || "ไม่ระบุห้อง"}
-                      </p>
-                      <div className="space-y-1 text-gray-700">
-                        <p>
-                          <strong>วันที่:</strong> {b.date || "ไม่ระบุ"}
-                        </p>
-                        <p>
-                          <strong>เวลา:</strong> {b.time || "ไม่ระบุ"}
-                        </p>
-                      </div>
+                  <div className="flex-1">
+                    <p className="font-medium text-blue-800">{b.room || "ไม่ระบุห้อง"}</p>
+                    <div className="text-blue-600 text-sm space-y-1 mt-1">
+                      <p><span className="font-medium">วันที่:</span> {b.date || "-"}</p>
+                      <p><span className="font-medium">เวลา:</span> {b.time || "-"}</p>
                     </div>
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition font-semibold"
-                    >
-                      ยกเลิก
-                    </button>
                   </div>
+                  <button
+                    onClick={() => handleDelete(index)}
+                    className="text-red-600 text-sm font-medium px-3 py-1 rounded hover:bg-red-50 transition"
+                  >
+                    ยกเลิก
+                  </button>
                 </div>
               ))}
             </div>
@@ -132,8 +121,9 @@ export default function ProfilePage() {
         </div>
       </main>
 
-      <footer className="bg-gray-50 text-center p-4 shadow-inner">
-        <p className="text-gray-500">© 2024 My App. All rights reserved.</p>
+      {/* Footer */}
+      <footer className="text-center p-4 text-blue-300 text-xs border-t border-blue-200">
+        © 2024 My App. All rights reserved.
       </footer>
     </div>
   );
